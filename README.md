@@ -54,8 +54,8 @@ docker-compose up --build
 ```
 
 #### Access the Application
-- API: `http://localhost:3000`
-- Swagger Documentation: `http://localhost:3000/api`
+- API: `http://localhost:3000/api/v1`
+- Swagger Documentation: `http://localhost:3000/api/v1/docs`
 
 ### 4. Run Locally (Without Docker)
 
