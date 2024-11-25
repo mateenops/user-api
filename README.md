@@ -30,8 +30,8 @@ Ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/nestjs-user-management.git
-cd nestjs-user-management
+git clone https://github.com/mateenops/user-api
+cd user-api
 ```
 
 ### 2. Environment Variables
