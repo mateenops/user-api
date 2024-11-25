@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nestjs-app
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: user
+      DATABASE_USER: mateen
+      DATABASE_PASSWORD: mateen123
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16.4-alpine3.20
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: user
+      POSTGRES_USER: mateen
+      POSTGRES_PASSWORD: mateen123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
