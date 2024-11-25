@@ -1,0 +1,77 @@
+Task 2: Database Schema and Optimization
+    
+    Schema
+        CREATE TABLE users (
+        userId SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL,
+        age INT NOT NULL
+        );
+
+    Optimized Query:
+        SELECT * FROM users WHERE age > 18 ORDER BY name ASC;
+
+    Indexes:
+        CREATE INDEX idx_users_age ON users(age);
+
+Task 4: API Performance and Security
+Performance Optimizations
+
+    1. Caching: Use Redis to Cache Frequently Requested Data
+    Explanation:
+    Redis is a fast, in-memory key-value store ideal for caching.
+    By caching frequently accessed data (e.g., user profiles), you reduce the load on your database and improve response times.
+    Example:
+    Cache user details retrieved by ID. For subsequent requests, serve the cached data instead of querying the database.
+    Use a TTL (Time to Live) to keep the cache updated.
+
+    2. Database Optimization: Use Indexes and Avoid Fetching Unnecessary Columns
+    Explanation:
+    Indexes: Speed up data retrieval by allowing the database to locate rows quickly without scanning the entire table.
+    Example: Index the email field in a users table for fast lookups.
+    Selective Queries: Fetch only the required columns to minimize data transfer and memory usage.
+    Example: Instead of SELECT * FROM users, use SELECT id, name FROM users if you only need those columns.
+
+    3. Connection Pooling: Optimize TypeORM Connection Pool Settings
+    Explanation:
+    Connection pooling maintains a pool of database connections to reuse instead of creating new ones for each request.
+    Optimizing pool size and idle time reduces latency and prevents overwhelming the database.
+    In TypeORM, configure the pool settings in your database configuration file.
+
+    4. Pagination: Implement Pagination for GET Requests
+    Explanation:
+    Returning a large dataset in one response can strain the server and client.
+    Pagination splits results into smaller, manageable chunks.
+    Example:
+    For a GET /users endpoint, use query parameters like ?page=1&limit=10 to return the first 10 users.
+
+Security Measures
+
+    1. Validation: Use class-validator for Request Body Validation
+    Explanation:
+    Ensures that incoming data conforms to expected formats.
+    Reduces the risk of invalid or malicious data entering the application.
+    Example: Validate that email is a valid email address and age is a positive integer.
+
+    2. Rate Limiting: Use nestjs-rate-limiter to Prevent Abuse
+    Explanation:
+    Rate limiting restricts the number of requests a user can make within a given timeframe.
+    Protects against denial-of-service (DoS) attacks and API abuse.
+    Example: Limit to 100 requests per minute per user.
+
+    3. Authentication: Add JWT-based Authentication
+    Explanation:
+    JSON Web Tokens (JWTs) securely transmit user identity between parties.
+    Ensures that only authorized users can access protected endpoints.
+    Example: Protect routes like POST /users by requiring a valid JWT in the request headers.
+
+    4. HTTPS: Ensure All Communication Happens Over HTTPS
+    Explanation:
+    HTTPS encrypts data in transit, protecting it from interception or tampering.
+    Especially critical for sensitive information like user credentials or personal data.
+    
+    5. Error Handling: Centralize and Sanitize Error Responses
+    Explanation:
+    Centralized error handling makes it easier to manage and format errors consistently.
+    Sanitizing responses ensures that sensitive information (e.g., stack traces or database details) is not exposed to clients.
+    Example: Return a generic message like "Internal server error" instead of a detailed stack trace.
